@@ -1,0 +1,98 @@
+O PROGRAMA UTILIZADO PARA TESTES FOI O POSTMAN:
+
+SObBREVIVENTE
+@PostMapping(path = "sobrevivente/salvar")
+    {
+        "nome": String (Obrigatorio),
+        "dtnascimento": Date (Obrigatorio),
+        "sexo": String (M - Masculino e F - Feminino) (Obrigatorio),
+        "latitude": Decimal (Obrigatorio),
+        "longitude": Decimal (Obrigatorio),
+        "infectado": Boolean (Obrigatorio)
+    }
+@PutMapping("sobrevivente/alterar")
+    {
+        "id": int (Obrigatorio),
+        "nome": String,
+        "dtnascimento": Date,
+        "sexo": String (M - Masculino e F - Feminino),
+        "latitude": Decimal,
+        "longitude": Decimal,
+        "infectado": Boolean
+    }
+@DeleteMapping("sobrevivente/deletar")
+    {
+        "id": int (Obrigatorio)
+	}
+@PutMapping(path = "/sobrevivente/atualizalocalizacao")
+    {
+        "id": int (Obrigatorio),
+        "latitude": Decimal (Obrigatorio),
+        "longitude": Decimal (Obrigatorio),
+    }
+SINALIZAR INFECCAO
+@GetMapping(path = "/sobrevivente/sinalizainfeccao/list")
+
+Lista todos os sobreviventes que foram sinalizados como infectado pelo menos uma vez;
+
+@PostMapping(path = "sobrevivente/sinalizainfeccao/salvar")
+{
+	"id": int (Obrigatorio),
+        "idsobrevivente": int (Obrigatorio),
+}
+
+INVENTARIO
+@GetMapping(path = "/inventario/{idsobrevivente}")
+
+Lista o inventario de um determinado sobrevivente
+
+@PostMapping(path = "inventario/salvar")
+    {
+        "iditemcomercial": int (Obrigatorio),
+        "idsobrevivente": int (Obrigatorio),
+        "quantidade": int (Obrigatorio),
+    }
+
+@DeleteMapping("inventario/deletar")
+    {
+        "id": int (Obrigatorio)
+	}
+
+@PutMapping("inventario/alterar")
+    {
+        "id": int (Obrigatorio)
+        "iditemcomercial": int (Obrigatorio),
+        "idsobrevivente": int (Obrigatorio),
+        "quantidade": int (Obrigatorio),
+    }
+
+TROCA
+@PostMapping(path = "/realizartroca")
+{itens: [{
+        "idsobreviventeOrigem": int (Obrigatorio),
+        "iditemOrigem": int (Obrigatorio),
+        "quantidadeOrigem": int (Obrigatorio),
+        "idsobreviventeDestino": int (Obrigatorio),
+        "iditemDestino": int (Obrigatorio),
+        "quantidadeDestino": int (Obrigatorio)
+    },{
+        "idsobreviventeOrigem": int (Obrigatorio),
+        "iditemOrigem": int (Obrigatorio),
+        "quantidadeOrigem": int (Obrigatorio),
+        "idsobreviventeDestino": int (Obrigatorio),
+        "iditemDestino": int (Obrigatorio),
+        "quantidadeDestino": int (Obrigatorio)
+    }]}
+
+RELATORIOS
+@GetMapping(path = "relatorios/relatoriosobreviventesinfectados")
+
+Relatorio do percentual de sobreviventes infectados e nao infectados;
+
+@GetMapping(path = "relatorios/relatoriomediaitemsobrevivente")
+
+Relatorio da media de item por sobrevivente
+
+@GetMapping(path = "relatorios/relatoripontosperdidos")
+
+Relatorio mostra a quantidade pontos perdidos devido a sobreviventes infectados

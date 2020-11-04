@@ -1,0 +1,84 @@
+Banco de dados utilizado: POSTGRES;
+
+username: postgres
+password: postgres
+
+Criacao da estrutura do banco de dados:
+
+CREATE DATABASE zssn
+  WITH OWNER = postgres
+       ENCODING = 'UTF8'
+       TABLESPACE = pg_default
+       LC_COLLATE = 'Portuguese_Brazil.1252'
+       LC_CTYPE = 'Portuguese_Brazil.1252'
+       CONNECTION LIMIT = -1;
+
+
+CREATE TABLE inventario
+(
+  id bigserial NOT NULL,
+  iditemcomercial bigint,
+  idsobrevivente bigint,
+  quantidade integer NOT NULL,
+  CONSTRAINT inventario_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_id_itemcomercial FOREIGN KEY (iditemcomercial)
+      REFERENCES itens_comerciais (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_id_sobrevivente FOREIGN KEY (idsobrevivente)
+      REFERENCES sobrevivente (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE inventario
+  OWNER TO postgres;
+
+
+CREATE TABLE itens_comerciais
+(
+  id bigserial NOT NULL,
+  descricao character varying(255),
+  pontuacao integer NOT NULL,
+  CONSTRAINT itens_comerciais_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE itens_comerciais
+  OWNER TO postgres;
+
+
+CREATE TABLE sinaliza_infeccao
+(
+  id bigserial NOT NULL,
+  idsobrevivente integer NOT NULL,
+  quantidade integer NOT NULL,
+  CONSTRAINT sinaliza_infeccao_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_id_sobrevivente FOREIGN KEY (idsobrevivente)
+      REFERENCES sobrevivente (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE sinaliza_infeccao
+  OWNER TO postgres;
+
+
+CREATE TABLE sobrevivente
+(
+  id bigserial NOT NULL,
+  dtnascimento date,
+  infectado boolean,
+  nome character varying(255),
+  sexo character varying(255),
+  latitude numeric(19,2),
+  longitude numeric(19,2),
+  CONSTRAINT sobrevivente_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE sobrevivente
+  OWNER TO postgres;
